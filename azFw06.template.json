@@ -11,11 +11,11 @@
         }
     },
     "variables": {
-        "virtualNetworks_HUB_VNet_name":"HUB-VNet",
-        "azureFirewalls_AzFw01_name":"AzFw01",
-        "publicIPAddresses_AzFw01_pip_name":"AzFw01-pip",
-        "routeTables_Azfw01_Routetable_name":"Azfw01-Routetable",
-        "applicationGateways_AzGatApp01_name": "AzGatApp01",
+        "virtualNetworks_HUB_name":"HUB-VNet",
+        "azureFirewalls_name":"AzFw01",
+        "publicIPAddresses_AzFw01_name":"AzFw01-pip",
+        "routeTables_Azfw01_name":"Azfw01-Routetable",
+        "applicationGateways_name": "AzGatApp01",
         "publicIPAddresses_AzGatApp01_ip01_name":"AzGatApp01-ip01",
         "storageAccounts_rghubdiag100_name":"rghubdiag100",
         "virtualMachines_VMCorp01_name":"VMCorp01",
@@ -30,7 +30,7 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-11-01",
             "name": "[variables('networkSecurityGroups_VMCorp01_nsg_name')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "properties": {
                 "securityRules": [
@@ -57,8 +57,8 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2019-11-01",
-            "name": "[variables('publicIPAddresses_AzFw01_pip_name')]",
-            "location": "[variables('location')]",
+            "name": "[variables('publicIPAddresses_AzFw01_name')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "sku": {
                 "name": "Standard"
@@ -75,7 +75,7 @@
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2019-11-01",
             "name": "[variables('publicIPAddresses_AzGatApp01_ip01_name')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "sku": {
                 "name": "Standard"
             },
@@ -90,8 +90,8 @@
         {
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2019-11-01",
-            "name": "[variables('routeTables_Azfw01_Routetable_name')]",
-            "location": "[variables('location')]",
+            "name": "[variables('routeTables_Azfw01_name')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "properties": {
                 "disableBgpRoutePropagation": false,
@@ -110,8 +110,8 @@
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-11-01",
-            "name": "[variables('virtualNetworks_HUB_VNet_name')]",
-            "location": "[variables('location')]",
+            "name": "[variables('virtualNetworks_HUB_name')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "properties": {
                 "addressSpace": {
@@ -180,7 +180,7 @@
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
             "name": "[variables('storageAccounts_rghubdiag100_name')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "sku": {
                 "name": "Standard_LRS",
@@ -235,9 +235,9 @@
         {
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
-            "name": "[concat(variables('routeTables_Azfw01_Routetable_name'), '/ForwardToAzFw01')]",
+            "name": "[concat(variables('routeTables_Azfw01_name'), '/ForwardToAzFw01')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/routeTables', variables('routeTables_Azfw01_Routetable_name'))]"
+                "[resourceId('Microsoft.Network/routeTables', variables('routeTables_Azfw01_name'))]"
             ],
             "properties": {
                 "addressPrefix": "0.0.0.0/0",
@@ -248,9 +248,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2019-11-01",
-            "name": "[concat(variables('virtualNetworks_HUB_VNet_name'), '/AGSubnet')]",
+            "name": "[concat(variables('virtualNetworks_HUB_name'), '/AGSubnet')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_VNet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_name'))]"
             ],
             "properties": {
                 "addressPrefix": "192.168.50.0/24",
@@ -263,9 +263,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2019-11-01",
-            "name": "[concat(variables('virtualNetworks_HUB_VNet_name'), '/AzureFirewallSubnet')]",
+            "name": "[concat(variables('virtualNetworks_HUB_name'), '/AzureFirewallSubnet')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_VNet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_name'))]"
             ],
             "properties": {
                 "addressPrefix": "192.168.1.0/26",
@@ -278,9 +278,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2019-11-01",
-            "name": "[concat(variables('virtualNetworks_HUB_VNet_name'), '/CorpSubnet')]",
+            "name": "[concat(variables('virtualNetworks_HUB_name'), '/CorpSubnet')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_VNet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_name'))]"
             ],
             "properties": {
                 "addressPrefix": "192.168.10.0/24",
@@ -293,9 +293,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2019-11-01",
-            "name": "[concat(variables('virtualNetworks_HUB_VNet_name'), '/InfraSubnet')]",
+            "name": "[concat(variables('virtualNetworks_HUB_name'), '/InfraSubnet')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_VNet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_name'))]"
             ],
             "properties": {
                 "addressPrefix": "192.168.20.0/24",
@@ -308,9 +308,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2019-11-01",
-            "name": "[concat(variables('virtualNetworks_HUB_VNet_name'), '/VPNSubnet')]",
+            "name": "[concat(variables('virtualNetworks_HUB_name'), '/VPNSubnet')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_VNet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_HUB_name'))]"
             ],
             "properties": {
                 "addressPrefix": "192.168.70.0/24",
@@ -359,7 +359,7 @@
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-07-01",
             "name": "[variables('virtualMachines_VMCorp01_name')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaces_vmcorp01537_name'))]",
@@ -410,10 +410,10 @@
         {
             "type": "Microsoft.Network/applicationGateways",
             "apiVersion": "2019-11-01",
-            "name": "[variables('applicationGateways_AzGatApp01_name')]",
-            "location": "[variables('location')]",
+            "name": "[variables('applicationGateways_name')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_VNet_name'), 'AGSubnet')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_name'), 'AGSubnet')]",
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_AzGatApp01_ip01_name'))]"
             ],
             "properties": {
@@ -426,7 +426,7 @@
                         "name": "appGatewayIpConfig",
                         "properties": {
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_VNet_name'), 'AGSubnet')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_name'), 'AGSubnet')]"
                             }
                         }
                     }
@@ -477,10 +477,10 @@
                         "name": "listner01",
                         "properties": {
                             "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_AzGatApp01_name')), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_name')), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
                             },
                             "frontendPort": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_AzGatApp01_name')), '/frontendPorts/port_80')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_name')), '/frontendPorts/port_80')]"
                             },
                             "protocol": "Http",
                             "hostNames": [],
@@ -495,13 +495,13 @@
                         "properties": {
                             "ruleType": "Basic",
                             "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_AzGatApp01_name')), '/httpListeners/listner01')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_name')), '/httpListeners/listner01')]"
                             },
                             "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_AzGatApp01_name')), '/backendAddressPools/Pool01')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_name')), '/backendAddressPools/Pool01')]"
                             },
                             "backendHttpSettings": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_AzGatApp01_name')), '/backendHttpSettingsCollection/HttpSettings-80')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('applicationGateways_name')), '/backendHttpSettingsCollection/HttpSettings-80')]"
                             }
                         }
                     }
@@ -529,12 +529,12 @@
         {
             "type": "Microsoft.Network/azureFirewalls",
             "apiVersion": "2019-11-01",
-            "name": "[variables('azureFirewalls_AzFw01_name')]",
-            "location": "[variables('location')]",
+            "name": "[variables('azureFirewalls_name')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_AzFw01_pip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_VNet_name'), 'AzureFirewallSubnet')]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_AzFw01_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_name'), 'AzureFirewallSubnet')]"
             ],
             "properties": {
                 "sku": {
@@ -545,13 +545,13 @@
                 "additionalProperties": {},
                 "ipConfigurations": [
                     {
-                        "name": "[concat(variables('azureFirewalls_AzFw01_name'), '-pip')]",
+                        "name": "[concat(variables('azureFirewalls_name'), '-pip')]",
                         "properties": {
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_AzFw01_pip_name'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_AzFw01_name'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_VNet_name'), 'AzureFirewallSubnet')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_name'), 'AzureFirewallSubnet')]"
                             }
                         }
                     }
@@ -565,10 +565,10 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-11-01",
             "name": "[variables('networkInterfaces_vmcorp01537_name')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_VNet_name'), 'CorpSubnet')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_name'), 'CorpSubnet')]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroups_VMCorp01_nsg_name'))]"
             ],
             "properties": {
@@ -579,7 +579,7 @@
                             "privateIPAddress": "192.168.10.50",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_VNet_name'), 'CorpSubnet')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworks_HUB_name'), 'CorpSubnet')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"

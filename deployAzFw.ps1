@@ -2,8 +2,8 @@
 $Location="canadacentral"
 $rsg="RG-HUB"
 
-$parameterFile="D:\git\repo\GumHUB01.parameters.json"
-$templateFile = "D:\git\repo\GumHUB01.template.json"
+$parameterFile="D:\git\repo\repo\GumHUB02.parameters.json"
+$templateFile = "D:\git\repo\repo\GumHUB02.template.json"
 $Namedeployment="AzFwEnvironment"
 
 New-AzResourceGroup -Name $rsg -Location $Location 
