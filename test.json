@@ -1,3 +1,4 @@
+## nom
 {
             "type": "Microsoft.Network/applicationGateways",
             "apiVersion": "2019-11-01",
@@ -22,8 +23,6 @@
                         }
                     }
                 ],
-                "sslCertificates": [],
-                "trustedRootCertificates": [],
                 "frontendIPConfigurations": [
                     {
                         "name": "appGwPublicFrontendIp",
@@ -110,9 +109,6 @@
                         }
                     }
                 ],
-                "probes": [],
-                "rewriteRuleSets": [],
-                "redirectConfigurations": [],
                 "webApplicationFirewallConfiguration": {
                     "enabled": true,
                     "firewallMode": "Detection",
