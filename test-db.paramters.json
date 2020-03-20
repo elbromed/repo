@@ -1,0 +1,129 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "administratorLogin": {
+            "value": "adminsa"
+        },
+        "administratorLoginPassword": {
+            "value": null
+        },
+        "collation": {
+            "value": "SQL_Latin1_General_CP1_CI_AS"
+        },
+        "databaseName": {
+            "value": "db001"
+        },
+        "tier": {
+            "value": "GeneralPurpose"
+        },
+        "skuName": {
+            "value": "GP_Gen5_2"
+        },
+        "location": {
+            "value": "canadacentral"
+        },
+        "maxSizeBytes": {
+            "value": 34359738368
+        },
+        "sampleName": {
+            "value": ""
+        },
+        "serverName": {
+            "value": "srvtest-db001"
+        },
+        "licenseType": {
+            "value": "LicenseIncluded"
+        },
+        "readScaleOut": {
+            "value": "Disabled"
+        },
+        "zoneRedundant": {
+            "value": false
+        },
+        "numberOfReplicas": {
+            "value": 0
+        },
+        "enableADS": {
+            "value": true
+        },
+        "allowAzureIps": {
+            "value": false
+        },
+        "allowClientIp": {
+            "value": false
+        },
+        "clientIpValue": {
+            "value": "205.237.253.10"
+        },
+        "databaseTags": {
+            "value": {}
+        },
+        "serverTags": {
+            "value": {}
+        },
+        "enableVA": {
+            "value": true
+        },
+        "enablePrivateEndpoint": {
+            "value": false
+        },
+        "privateEndpointNestedTemplateId": {
+            "value": "pe-ad6ed6c8-7441-49b9-a446-8ab2feea500f"
+        },
+        "privateEndpointSubscriptionId": {
+            "value": ""
+        },
+        "privateEndpointResourceGroup": {
+            "value": ""
+        },
+        "privateEndpointName": {
+            "value": ""
+        },
+        "privateEndpointLocation": {
+            "value": ""
+        },
+        "privateEndpointSubnetId": {
+            "value": ""
+        },
+        "privateLinkServiceName": {
+            "value": ""
+        },
+        "privateLinkServiceServiceId": {
+            "value": ""
+        },
+        "privateEndpointVnetSubscriptionId": {
+            "value": ""
+        },
+        "privateEndpointVnetResourceGroup": {
+            "value": ""
+        },
+        "privateEndpointVnetName": {
+            "value": ""
+        },
+        "privateEndpointSubnetName": {
+            "value": ""
+        },
+        "enablePrivateDnsZone": {
+            "value": true
+        },
+        "privateEndpointDnsRecordUniqueId": {
+            "value": "ad6ed6c8-7441-49b9-a446-8ab2feea5012"
+        },
+        "privateEndpointTemplateLink": {
+            "value": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0116619/DeploymentTemplates/PrivateEndpoint.json"
+        },
+        "privateDnsForPrivateEndpointTemplateLink": {
+            "value": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0116619/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
+        },
+        "privateDnsForPrivateEndpointNicTemplateLink": {
+            "value": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0116619/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
+        },
+        "privateDnsForPrivateEndpointIpConfigTemplateLink": {
+            "value": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0116619/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
+        },
+        "clientIpRuleName": {
+            "value": "ClientIp-2020-3-19_9-49-17"
+        }
+    }
+}

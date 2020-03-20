@@ -1,0 +1,164 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_AppsInterne_devops_name": {
+            "defaultValue": "AppsInterne-devops",
+            "type": "String"
+        },
+        "serverfarms_ASP_AppsStandard_devops_externalid": {
+            "defaultValue": "/subscriptions/d4b4d042-2968-4210-b2db-9666928904db/resourceGroups/AppsInterne-rg-devops/providers/Microsoft.Web/serverfarms/ASP-AppsStandard-devops",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('sites_AppsInterne_devops_name')]",
+            "location": "Canada Central",
+            "tags": {
+                "Environnement": "devops"
+            },
+            "kind": "app",
+            "identity": {
+                "principalId": "9054e372-3397-49f3-9f44-7b101afccad7",
+                "tenantId": "eaf9ba0e-fc80-4bce-b1b1-786f7900acc0",
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "appsinterne-devops.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "appsinterne-devops.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_ASP_AppsStandard_devops_externalid')]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": true,
+                "redundancyMode": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_AppsInterne_devops_name'), '/web')]",
+            "location": "Canada Central",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_AppsInterne_devops_name'))]"
+            ],
+            "tags": {
+                "Environnement": "devops"
+            },
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2017",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$AppsInterne-devops",
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "localMySqlEnabled": false,
+                "managedServiceIdentityId": 6743,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "205.237.253.10/32",
+                        "action": "Allow",
+                        "tag": "Default",
+                        "priority": 100,
+                        "name": "Allow_Soquij",
+                        "description": "Allow_Soquij"
+                    },
+                    {
+                        "ipAddress": "52.139.20.53/32",
+                        "action": "Allow",
+                        "tag": "Default",
+                        "priority": 100,
+                        "name": "ViaAppGat"
+                    },
+                    {
+                        "ipAddress": "Any",
+                        "action": "Deny",
+                        "priority": 2147483647,
+                        "name": "Deny all",
+                        "description": "Deny all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": true,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_AppsInterne_devops_name'), '/', parameters('sites_AppsInterne_devops_name'), '.azurewebsites.net')]",
+            "location": "Canada Central",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_AppsInterne_devops_name'))]"
+            ],
+            "properties": {
+                "siteName": "AppsInterne-devops",
+                "hostNameType": "Verified"
+            }
+        }
+    ]
+}

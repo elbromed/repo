@@ -1,0 +1,155 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_GumSolr_devops_name": {
+            "defaultValue": "GumSolr-devops",
+            "type": "String"
+        },
+        "serverfarms_ASP_FrontEnd_devops_externalid": {
+            "defaultValue": "/subscriptions/d4b4d042-2968-4210-b2db-9666928904db/resourceGroups/GumSite-rg-devops/providers/Microsoft.Web/serverfarms/ASP-FrontEnd-devops",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('sites_GumSolr_devops_name')]",
+            "location": "Canada Central",
+            "kind": "app",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "gumsolr-devops.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "gumsolr-devops.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_ASP_FrontEnd_devops_externalid')]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": true,
+                "redundancyMode": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_GumSolr_devops_name'), '/web')]",
+            "location": "Canada Central",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GumSolr_devops_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2017",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$GumSolr-devops",
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": true,
+                "javaVersion": "1.8",
+                "javaContainer": "JETTY",
+                "javaContainerVersion": "9.3",
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": true
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "205.237.253.10/32",
+                        "action": "Allow",
+                        "tag": "Default",
+                        "priority": 100,
+                        "name": "AllowSoquij",
+                        "description": "AllowSoquij"
+                    },
+                    {
+                        "ipAddress": "52.139.20.53/32",
+                        "action": "Allow",
+                        "tag": "Default",
+                        "priority": 100,
+                        "name": "ViaAppgat"
+                    },
+                    {
+                        "ipAddress": "Any",
+                        "action": "Deny",
+                        "priority": 2147483647,
+                        "name": "Deny all",
+                        "description": "Deny all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": true,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_GumSolr_devops_name'), '/', parameters('sites_GumSolr_devops_name'), '.azurewebsites.net')]",
+            "location": "Canada Central",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GumSolr_devops_name'))]"
+            ],
+            "properties": {
+                "siteName": "GumSolr-devops",
+                "hostNameType": "Verified"
+            }
+        }
+    ]
+}

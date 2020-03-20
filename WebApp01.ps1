@@ -1,11 +1,12 @@
-Connect-AzAccount
 
 #  Azure Web Apps Deployments
+Connect-AzAccount
 Get-AzSubscription 
 Select-AzSubscription -Subscription "My Subscription"
-$resourceGroupName = "RG-DEMO-NE"
-$location = "North Europe"
+$Location="canadacentral"
+$resourceGroupName = "RG-HUB"
 
+New-AzResourceGroup -Name $resourceGroupName -Location $Location 
 # Create an Application Service Plan
 $appSP= New-AzAppServicePlan -Name "SP-DEMO-PS" -Location $location -ResourceGroupName $resourceGroupName -Tier PremiumV2
 
